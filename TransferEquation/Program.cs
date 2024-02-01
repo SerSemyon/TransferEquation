@@ -95,17 +95,23 @@ namespace TransferEquation
                 {
                     Uj[i] = Uj1[Nx - i - 1];
                 }
-                Console.WriteLine(Uj1.Length);
-                for (int i = 0; i < Uj1.Length; i++)
-                {
-                    Console.Write(Uj1[i] + ", ");
-                }
-                Console.WriteLine();
-                Console.WriteLine();
                 t += Ht;
             }
+
+            Console.WriteLine("Приближенное решение");
+            for (int i = 0; i < Uj.Length; i++)
+            {
+                Console.Write(Uj[i] + ", ");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
             Uex = U(a, t - Ht, X, L, Nx);
 
+            Console.WriteLine("Точное решение");
+            for (int i = 0; i < Uex.Length; i++)
+            {
+                Console.Write(Uex[i] + ", ");
+            }
         }
     }
 }
