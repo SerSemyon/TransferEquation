@@ -78,7 +78,7 @@ namespace TransferEquation
 
         static double A(double t, double x)
         {
-            return 1;//Math.Sin(t / 4.5 - x / 2);
+            return Math.Sin(t / 4.5 - x / 2);
         }
 
         static double[] A(double t, double h_x, int n_x)
@@ -135,13 +135,21 @@ namespace TransferEquation
             double[] Uj1 = new double[Nx];
             double[] a;
             double h_t;
-            double gm = 0;
-            while (t <= L)
+            double gm;
+            while (t < L)
             {
                 a = A(t, Hx, Nx);
                 h_t = Ht(a, Hx);
                 t += h_t;
-                Uj1[0] = Mu(t);
+                if (a[0] > 0)
+                {
+                    Uj1[0] = Mu(t);
+                }
+                else
+                {
+                    gm = a[0] * h_t / Hx;
+                    Uj1[0] = (1 + gm) * Uj[0] - gm * Uj[1];
+                }
                 for (int i = 1; i < Nx - 1; i++)
                 {
                     gm = a[i] * h_t / Hx;
@@ -166,7 +174,10 @@ namespace TransferEquation
                 for (int i = 0; i < Nx; i++)
                 {
                     Uj[i] = Uj1[i];
+                    Console.Write(Uj[i] + ", ");
                 }
+                Console.WriteLine();
+                Console.WriteLine();
             }
 
             Console.WriteLine("Приближенное решение");
